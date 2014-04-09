@@ -66,16 +66,16 @@ def get_now():
 
 
 class BaseHandler(tornado.web.RequestHandler):
-
+    # set the header for json
+    def initialize(self):
+        self.set_header("Content-Type", "application/json; charset=UTF-8")
     @property
     def db(self):
-        global db
-        db = torndb.Connection(
-                host=options.mysql_host, database=options.mysql_database,
-                user=options.mysql_user, password=options.mysql_password,
-                time_zone="+8:00")
-        return db
-
+        if not hasattr(self, "_db"):
+            self._db = torndb.Connection(
+                        host=options.mysql_host, database=options.mysql_database,
+                        user=options.mysql_user, password=options.mysql_password,time_zone="+8:00")
+        return self._db
     def write_error(self, status_code, **kwargs):
         if status_code==500:
             ret = {"ret":"9","msg":u"系统出错！！"}
@@ -83,6 +83,7 @@ class BaseHandler(tornado.web.RequestHandler):
             return
         else:
             super(BaseHandler, self).write_error(status_code, **kwargs)
+
 
 
 
