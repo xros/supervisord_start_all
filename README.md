@@ -4,7 +4,8 @@ Structure
 -----
 * Structure as the followings. 
 * Three main things: 1) start_daemon.sh 2) project "supervisord_init 3) project "supervisord_init2
-* In every project, there will be two useful things, as for this instance: (1) demo.conf (2) demo.py
+* In every project, there will be one useful thing, as for this instance: (1) demo.py
+* This package should be put at ```/var/opt``` as for its special structure
 * Those *.log, *.pid, *.sock files are invoked/generated after 'supervisord/supervisorctl' running
 
 >    
@@ -19,9 +20,12 @@ Structure
 >        
 
 
-There could be some files generated as the followings:
+* There could be some files generated as the followings:
 ```/var/run/supervisord.pid```, and ```/var/log/supervisord.log``` .
 The unique `supervisord` is the server which all other `supervisorctl` could talk to it.
+* The ```daemon.conf``` is the configuration file of thoes apps such as supervisord_init and supervisord_init2 . 
+This means you much edit daemon.conf if new apps are added here.
+
 
 ****
 
