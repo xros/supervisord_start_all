@@ -65,6 +65,7 @@ def get_now():
 
 
 
+
 class BaseHandler(tornado.web.RequestHandler):
     # set the header for json
     def initialize(self):
@@ -106,11 +107,20 @@ class TestPage1Handler(BaseHandler):
         return
 
 
+class TestPage2Handler(BaseHandler):
+    def get(self, *args, **kwargs):
+        ret = {'msg':'', 'ret':"0"}
+        logging.info('A request to test page 2')
+        self.write(json_dumps(ret))
+        return
+
+
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
             # 测试 torndb 效率
             (r"/testpage1", TestPage1Handler),                           # 测试
+            (r"/testpage2", TestPage2Handler),                           # 测试
 
 
             #(r"/update/dealer/profile", UpdateProfileHandler)
